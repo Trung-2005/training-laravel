@@ -6,6 +6,7 @@ use Illuminate\Http\Request; // Import Request class
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\FoxController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -126,4 +127,30 @@ Route::controller(ProductController::class)->group(function() {
     Route::get('/product-quantity', 'quantity');
     Route::get('/product-quantity/{soLuong}', 'quantity');
     
+});
+
+// ------ Bài 14: HTTP Response --------
+// HTTP Response: là phản hồi mà server gửi lại cho client sau khi xử lý một yêu cầu HTTP. Response có thể chứa dữ liệu, thông báo, hoặc các tài nguyên khác mà client yêu cầu. Laravel cung cấp nhiều cách để tạo và trả về response, bao gồm trả về view, JSON, redirect, và nhiều hơn nữa. Response giúp bạn kiểm soát cách dữ liệu được gửi đến client và cách client tương tác với server.
+Route::get('/test-response', function() {
+    // response json
+    // return response()->json([
+    //     'name' => 'Trung',
+    //     'email' => 'trung@gmail.com'
+    // ], 403);
+
+    // response redirect
+
+    //
+    // return response()->download(storage_path('app/private/public/images/storage/app/private/public/images/GD5GyIuUf64dj0oNBIs1dTxOzVOILN82vrU20PlF.png'));
+
+    //
+    // return response('Nội dung', 200)->header('Content-Type', 'text/plain');
+});
+
+
+// ------ Bài 15: Blade Template --------
+Route::get('/blade', [FoxController::class, 'index']);
+// ------ Bài 16: Blade Template 2 --------
+Route::get('/blade', function() {
+    return view('clients.blog');
 });
