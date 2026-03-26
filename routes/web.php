@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cache; // Import Cache facade
 use Illuminate\Http\Request; // Import Request class
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\FoxController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,15 +45,18 @@ Route::get('/cache-get-fa', function () {
 // })->name('post-new-tin-tuc');
 
 // Phương thức match: cho phép bạn định nghĩa một route có thể xử lý nhiều phương thức HTTP khác nhau (GET, POST, PUT, DELETE, v.v.) trong cùng một route definition. Điều này giúp bạn tiết kiệm thời gian và mã khi bạn muốn xử lý cùng một URL với nhiều phương thức khác nhau.
-Route::match(['get', 'post'], '/tin-tuc', function(Request $request) {
-    // Kiểm tra phương thức HTTP của request (POST)   
-    if ($request->isMethod('post')) {
-        return view('pot-new');
-    }
+// Route::match(['get', 'post'], '/tin-tuc', function(Request $request) {
+//     // Kiểm tra phương thức HTTP của request (POST)   
+//     if ($request->isMethod('post')) {
+//         return view('pot-new');
+//     }
 
-    return view('tintuc');
-})->name('post-new-tin-tuc');
+//     return view('tintuc');
+// })->name('post-new-tin-tuc');
 
+// -------- Bài 13: HTTP Request --------
+Route::post('/tin-tuc', [NewsController::class, 'index']);
+Route::get('/tin-tuc', [NewsController::class, 'index2']);
 
 // -----  Bài 9  ----
 Route::get('/user', function() {
@@ -96,6 +101,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
 
 // ------ Bài 11: Middleware --------
 // Tạo Middleware: php artisan make:middleware CheckAge
+// Middleware là một lớp trung gian được sử dụng để xử lý các yêu cầu HTTP trước khi chúng đến controller hoặc sau khi chúng rời khỏi controller. Middleware có thể được sử dụng để thực hiện các tác vụ như xác thực, kiểm tra quyền truy cập, ghi log, và nhiều hơn nữa. Middleware giúp bạn tách biệt các logic xử lý yêu cầu ra khỏi controller, làm cho mã của bạn trở nên sạch sẽ và dễ bảo trì hơn.
 Route::get('/test-middleware', function () {
     return 'Ok luôn';
 });
@@ -113,3 +119,38 @@ Route::get('/test-middleware/{age}', function () {
 Route::get('/test-work/{work}', function () {
     return 'Ok';
 })->name('test-age')->middleware('check-work');
+
+
+// ------ Bài 12: Controller, View --------
+// 
+Route::controller(ProductController::class)->group(function() {
+    Route::get('/product-quantity', 'quantity');
+    Route::get('/product-quantity/{soLuong}', 'quantity');
+    
+});
+
+// ------ Bài 14: HTTP Response --------
+// HTTP Response: là phản hồi mà server gửi lại cho client sau khi xử lý một yêu cầu HTTP. Response có thể chứa dữ liệu, thông báo, hoặc các tài nguyên khác mà client yêu cầu. Laravel cung cấp nhiều cách để tạo và trả về response, bao gồm trả về view, JSON, redirect, và nhiều hơn nữa. Response giúp bạn kiểm soát cách dữ liệu được gửi đến client và cách client tương tác với server.
+Route::get('/test-response', function() {
+    // response json
+    // return response()->json([
+    //     'name' => 'Trung',
+    //     'email' => 'trung@gmail.com'
+    // ], 403);
+
+    // response redirect
+
+    //
+    // return response()->download(storage_path('app/private/public/images/storage/app/private/public/images/GD5GyIuUf64dj0oNBIs1dTxOzVOILN82vrU20PlF.png'));
+
+    //
+    // return response('Nội dung', 200)->header('Content-Type', 'text/plain');
+});
+
+
+// ------ Bài 15: Blade Template --------
+Route::get('/blade', [FoxController::class, 'index']);
+// ------ Bài 16: Blade Template 2 --------
+Route::get('/blade', function() {
+    return view('clients.blog');
+});
