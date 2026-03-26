@@ -1,0 +1,19 @@
+COMPONENT: mục đích để tái sử dụng code, tránh lặp lại code, giúp code gọn hơn, dễ bảo trì hơn
+--> php artisan make:component component-name
+Dùng component thì nội dụng tự động truyền vào view
+- tên mặc định của component là {{ $slot }}
+- <x-alert>Thông tin Nav</x-alert> => không truyền gì là mặc định (public function \_\_construct($type = 'success'))
+
+
+Database Laravel
+- SQL
+- Query Builder
+- Eloquent ORM: hướng đối tượng, dễ sử dụng, có nhiều tính năng hơn Query Builder
+ORM (Object Relational Mapping) tích hợp sẵn trong Laravel (Eloquent)
+    - Object: là các class (Model) trong PHP
+    - Relational: là các bảng dữ liệu (table) trong cơ sở dữ liệu quan hệ (MySQL, PostgreSQL, ...)
+    - Mapping: là quá trình ánh xạ dữ liệu giữa Object <-> Table
+
++ Mỗi Model đại diện cho một bảng trong database
++ Mỗi instance (object) của Model là một hàng (record) trong bảng đó
++ Eloquent cho phép bạn thao tác với bảng dữ liệu bằng cú pháp hướng đối tượng thay vì viết SQL
