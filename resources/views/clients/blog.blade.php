@@ -13,8 +13,9 @@
     </form>
 @endsection
 
-<x-alert type="info">Thông tin người dùng</x-alert>
-<x-alert type="danger">Đăng ký thất bại</x-alert>
-<x-alert>Thông tin Nav</x-alert>
 
-<x-message>Hello World</x-message>
+<x-info type="info">Đăng ký thành công</x-info>
+<x-info type="danger">Đăng ký không thành công</x-info>
+<x-info>Chỉnh sửa thông tin</x-info>
+
+<x-mess>Hello world</x-mess>
