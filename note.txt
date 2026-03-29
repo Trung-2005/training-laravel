@@ -17,3 +17,16 @@ ORM (Object Relational Mapping) tích hợp sẵn trong Laravel (Eloquent)
 + Mỗi Model đại diện cho một bảng trong database
 + Mỗi instance (object) của Model là một hàng (record) trong bảng đó
 + Eloquent cho phép bạn thao tác với bảng dữ liệu bằng cú pháp hướng đối tượng thay vì viết SQL
+
+
+Migration
+- migration là gì?
+- câu lệnh artisan liên quan đến migration
+- Shema Builder -> facade để tạo bảng, sửa bảng, xóa bảng
+php artisan migrate:status -> kiểm tra trạng thái của các migration
+php artisan migrate --path=/database/migrations/2026_03_29_080551_create_comments_table.php -> chạy migration cụ thể
+php artisan migrate:fresh -> xoá tất cả bảng rồi chạy lại tất cả migration (dùng khi đang trong quá trình phát triển, chưa có dữ liệu quan trọng)
+
+
+Seeger: 
+
