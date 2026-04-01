@@ -28,5 +28,20 @@ php artisan migrate --path=/database/migrations/2026_03_29_080551_create_comment
 php artisan migrate:fresh -> xoá tất cả bảng rồi chạy lại tất cả migration (dùng khi đang trong quá trình phát triển, chưa có dữ liệu quan trọng)
 
 
-Seeger: 
+Seeder: 
 
+Authenticaution - xác thực người dùng
+thư mục thay đổi khi cài Laravel Breeze
+- routes/auth.php
+- controllers/Auth
+- views/auth
+
+Thành phần chính của authentication:
++ Guard: xác định cách người dùng được xác thực cho mỗi yêu cầu. Laravel cung cấp nhiều guard khác nhau như session, token, ...
++ Provider: xác định cách người dùng được lấy ra từ cơ sở dữ liệu. Laravel cung cấp nhiều provider khác nhau như Eloquent, Database, ...
++ Provider Model: là model đại diện cho bảng users trong database, thường là App\Models\User
++ Middleware: là lớp trung gian xử lý các yêu cầu HTTP trước khi chúng đến controller. Laravel cung cấp middleware auth để bảo vệ các route chỉ cho phép người dùng đã xác thực truy cập
+  - auth: bảo vệ route chỉ cho phép người dùng đã xác thực truy cập 
+  - guest: ngăn không cho truy cập nếu người dùng đã xác thực, đăng nhập
++ Session & Cookie: Laravel sử dụng session để lưu trữ thông tin người dùng đã xác thực, thường là user_id. Cookie có thể được sử dụng để lưu trữ thông tin đăng nhập lâu dài (remember me)
+    -> login thành công -> lưu user_id vào session -> session_id được lưu trong cookie -> mỗi lần truy cập (refresh) route được bảo vệ bởi middleware auth, Laravel sẽ kiểm tra session để xác định người dùng đã xác thực hay chưa bằn cách đọc session_id từ cookie, lấy user_id từ session, sau đó lấy thông tin người dùng từ database dựa trên user_id đói với provider model (User)
