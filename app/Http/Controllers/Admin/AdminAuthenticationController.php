@@ -27,7 +27,8 @@ class AdminAuthenticationController extends Controller
         // hàm Auth::guard('admin')->attempt() sẽ kiểm tra thông tin đăng nhập dựa trên guard admin đã được cấu hình trong config/auth.php, nếu đăng nhập thành công sẽ trả về true, ngược lại trả về false
         if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate(); // regenerate session để ngăn chặn session fixation attacks (tấn công chiếm đoạt phiên làm việc)
-            return redirect()->intended(route('admin.dashboard')); // intended sẽ tự động chuyển hướng đến trang trước đó mà người dùng cố gắng truy cập trước khi bị chuyển hướng đến trang đăng nhập, nếu không có trang trước đó sẽ chuyển hướng đến route admin.dashboard
+            // return redirect()->intended(route('admin.dashboard')); // intended sẽ tự động chuyển hướng đến trang trước đó mà người dùng cố gắng truy cập trước khi bị chuyển hướng đến trang đăng nhập, nếu không có trang trước đó sẽ chuyển hướng đến route admin.dashboard
+            return redirect()->route('admin.dashboard'); // chuyển hướng đến trang dashboard của admin sau khi đăng nhập thành công
         }
 
         // Authentication failed...
@@ -38,7 +39,7 @@ class AdminAuthenticationController extends Controller
 
     public function logout(Request $request) {
         Auth::guard('admin')->logout();
-        // $request->session()->invalidate(); // invalidate session để đảm bảo rằng tất cả dữ liệu phiên làm việc hiện tại bị xóa và phiên làm việc không còn hợp lệ nữa
+        $request->session()->invalidate(); // invalidate session để đảm bảo rằng tất cả dữ liệu phiên làm việc hiện tại bị xóa và phiên làm việc không còn hợp lệ nữa
         $request->session()->regenerateToken(); // regenerate token để ngăn chặn CSRF attacks (tấn công giả mạo yêu cầu từ trang khác)
         return redirect()->route('admin.login'); // chuyển hướng đến trang đăng nhập của admin sau khi đăng xuất thành công
     }

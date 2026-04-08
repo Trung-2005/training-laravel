@@ -19,6 +19,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'check-age' => App\Http\Middleware\CheckAge::class,
             'check-work' => App\Http\Middleware\CheckAge::class
         ]);
+
+        // middleware cho route admin
+        // alias sẽ tạo một bí danh cho middleware, giúp chúng ta dễ dàng sử dụng middleware trong route bằng cách gọi tên alias thay vì phải gọi tên đầy đủ của lớp middleware, ví dụ thay vì phải viết App\Http\Middleware\AdminAuthenticate::class trong route thì chỉ cần viết 'admin:auth' là đủ, điều này giúp mã nguồn ngắn gọn và dễ đọc hơn, đồng thời cũng giúp chúng ta dễ dàng thay đổi lớp middleware mà không cần phải cập nhật tất cả các route sử dụng middleware đó, chỉ cần cập nhật alias một lần là đủ
+        $middleware->alias([
+            'admin.auth' => App\Http\Middleware\AdminAuthenticate::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -50,5 +50,24 @@ Multiple Authentication (xác thực đa người dùng)
 Có hai lại tài khoản: user và admin
 + cách 1: dùng guard khác nhau cho từng loại tài khoản (tách hai bảng users và admins) => dự án lớn
 + cách 2: dùng cùng một guard nhưng phân biệt bằng role trong bảng users (cột role) -> dùng is_admin
-
 Vd: sau khi tạo bảng admins, tạo model Admin, tạo guard và provider cho admin, sau đó tạo middleware để bảo vệ route dành cho admin, cuối cùng là tạo controller và view để xử lý đăng nhập cho admin.
+
+
+Tinker: công cụ dòng lệnh để tương tác với ứng dụng Laravel của bạn thông qua REPL (Read-Eval-Print Loop), cho phép bạn chạy code PHP trực tiếp trong môi trường của ứng dụng, rất hữu ích để thử nghiệm, debug, hoặc thực hiện các tác vụ nhanh mà không cần phải viết một script hoặc route riêng biệt.
+
+Authorization - phân quyền người dùng
+1. Authorization là gì?
+    Authorization là quá trình xác định xem người dùng đã xác thực có quyền truy cập vào tài nguyên hoặc thực hiện hành động cụ thể hay không. Trong Laravel, authorization thường được thực hiện thông qua Gates và Policies.
+    Khác với authentication (xác thực), authorization không xác định người dùng là ai mà xác định người dùng có quyền gì.
+    Authentication: bạn là ai (login)
+    Authorization: bạn có quyền gì (permissions)
+2. Cách thực hiện authorization trong Laravel
+    + Gates: là các closure (hàm ẩn danh) được định nghĩa trong AuthServiceProvider, dùng để kiểm tra quyền truy cập vào một hành động cụ thể. Ví dụ: kiểm tra xem người dùng có phải là admin hay không, bạn có được vào khu admin hay không.
+    + Policies: (dùng nhiều nhất) là các class được tạo ra để tổ chức logic authorization cho một model cụ thể. Mỗi policy thường liên kết với một model và chứa các phương thức để kiểm tra quyền truy cập vào các hành động liên quan đến model đó. Ví dụ: PostPolicy để kiểm tra xem người dùng có quyền chỉnh sửa bài viết hay không.
+    => không liên quan đến Model -> Gate
+    => liên quan đến Model -> Policy
+    - Gate: 
+    Vd: kiểm tra xem tài khoản có phải là admin hay không? Là ad -> Thông báo 'Xin chào admin' | Truy cập trang đích
+        B1: tạo cột is_admin bằng migration -> php artisan make:migration add_is_admin_to_users_table --table=users
+        B2: php artisan migrate
+        B3: định nghĩa Gate trong AuthServiceProvider
