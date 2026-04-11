@@ -71,3 +71,11 @@ Authorization - phân quyền người dùng
         B1: tạo cột is_admin bằng migration -> php artisan make:migration add_is_admin_to_users_table --table=users
         B2: php artisan migrate
         B3: định nghĩa Gate trong AuthServiceProvider
+    - Policy:
+    Vd: kiểm tra xem người dùng có quyền chỉnh sửa bài viết hay không?
+        PS C:\xampp\htdocs\quangtrung\project_T> php artisan make:migration create_posts_table
+        PS C:\xampp\htdocs\quangtrung\project_T> php artisan migrate
+        PS C:\xampp\htdocs\quangtrung\project_T> php artisan make:model Post
+        PS C:\xampp\htdocs\quangtrung\project_T> php artisan make:controller PostController --resource --model=Post            
+        PS C:\xampp\htdocs\quangtrung\project_T> php artisan make:policy PostPolicy --model=Post
+        
