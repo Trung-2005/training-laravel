@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // 1 user có thể tạo nhiều bài viết
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
 }
